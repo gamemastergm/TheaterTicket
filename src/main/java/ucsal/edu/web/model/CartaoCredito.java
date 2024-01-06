@@ -1,6 +1,10 @@
 package ucsal.edu.web.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,23 +18,29 @@ public class CartaoCredito {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	private String numeroCartao;
 	private String nomeCartao;
-	private String validade;
+	private LocalDate validade;
 	private int codigoSeguranca;
 	private double limite;
-	private Status status;
+
 	
-	public CartaoCredito(Long id, String numeroCartao, String nomeCartao, String validade, int codigoSeguranca,
-			double limite, Status status) {
+	public CartaoCredito() {
+		
+	}
+	
+	public CartaoCredito(Long id, Status status, String numeroCartao, String nomeCartao, LocalDate validade, int codigoSeguranca,
+			double limite ) {
 		super();
 		this.id = id;
+		this.status = status;
 		this.numeroCartao = numeroCartao;
 		this.nomeCartao = nomeCartao;
 		this.validade = validade;
 		this.codigoSeguranca = codigoSeguranca;
 		this.limite = limite;
-		this.status = status;
 	}
 
 	public Long getId() {
@@ -57,11 +67,11 @@ public class CartaoCredito {
 		this.nomeCartao = nomeCartao;
 	}
 
-	public String getValidade() {
+	public LocalDate getValidade() {
 		return validade;
 	}
 
-	public void setValidade(String validade) {
+	public void setValidade(LocalDate validade) {
 		this.validade = validade;
 	}
 

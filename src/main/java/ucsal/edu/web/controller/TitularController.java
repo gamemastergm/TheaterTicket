@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import ucsal.edu.web.model.Titular;
 import ucsal.edu.web.repository.TitularRepository;
+import ucsal.edu.web.service.CartaoCreditoService;
 import ucsal.edu.web.service.TitularService;
 
 @Controller
@@ -26,10 +27,88 @@ public class TitularController {
 	@Autowired
     private TitularService titularService;
 	
-	@GetMapping("/insert")
+	@Autowired
+    private CartaoCreditoService cartaoCreditoService;
+	
+	@GetMapping("/insertUser")
     public String insertRandomUsers() {
-        titularService.inserirUsuariosAleatorios(22000000);
+        titularService.inserirUsuariosAleatorios(25000);
         return "redirect:/";
+    }
+	
+	@GetMapping("/insertCart")
+    public String insertCartRandomUsers() {
+		cartaoCreditoService.inserirCartaoAleatorios(50000);
+        return "redirect:/";
+    }
+	
+	@GetMapping("/filtroNascimento")
+	public String filtroNascimento() {
+	    System.out.println("---------------------------filtroNascimento---------------------------");
+	    titularService.filtroNascimento("1980-02-01", "1980-02-30");
+	    System.out.println("---------------------------filtroNascimento---------------------------");
+	    return "redirect:/";
+	}
+	
+	@GetMapping("/filtroNome")
+    public String filtroNome() {
+		System.out.println("---------------------------filtroNome---------------------------");
+		titularService.filtroNome("Felipe");
+		System.out.println("---------------------------filtroNome---------------------------");
+        return "redirect:/";
+    }
+	
+	@GetMapping("/filtroRole")
+    public String filtroRole() {
+		System.out.println("---------------------------filtroRole---------------------------");
+		titularService.filtroRole("TITULAR");
+		System.out.println("---------------------------filtroRole---------------------------");
+        return "redirect:/";
+    }
+	
+	@GetMapping("/filtroQuantidadeCartoes")
+    public String filtroQuantidadeCartoes() {
+		System.out.println("---------------------------filtroQuantidadeCartoes---------------------------");
+		titularService.filtroQuantidadeCartoes(4);
+		System.out.println("---------------------------filtroQuantidadeCartoes---------------------------");
+        return "redirect:/";
+    }
+	
+    @GetMapping("/filtroNomeCartao")
+    public String filtroNomeCartao() {
+        System.out.println("---------------------------filtroNomeCartao---------------------------");
+        cartaoCreditoService.filtroNomeCartao("Felipe");
+        System.out.println("---------------------------filtroNomeCartao---------------------------");
+        return "redirect:/";
+    }
+
+    @GetMapping("/filtroLimiteCartao")
+    public String filtroLimiteCartao() {
+        System.out.println("---------------------------filtroLimiteCartao---------------------------");
+        cartaoCreditoService.filtroLimiteCartao(1000, 5000);
+        System.out.println("---------------------------filtroLimiteCartao---------------------------");
+        return "redirect:/";
+    }
+
+    @GetMapping("/filtroValidadeCartao")
+    public String filtroValidadeCartao() {
+        System.out.println("---------------------------filtroValidadeCartao---------------------------");
+        cartaoCreditoService.filtroValidadeCartao("1980-01", "1980-02");
+        System.out.println("---------------------------filtroValidadeCartao---------------------------");
+        return "redirect:/";
+    }
+    
+    @GetMapping("/filtroStatusCartao")
+    public String filtroStatusCartao() {
+        System.out.println("---------------------------filtroStatusCartao---------------------------");
+        cartaoCreditoService.filtroStatusCartao("DESBLOQUEADO");
+        System.out.println("---------------------------filtroStatusCartao---------------------------");
+        return "redirect:/";
+    }
+	
+	@GetMapping("/card")
+    public String cartao() {
+        return "/cartao";
     }
 
 
@@ -75,7 +154,7 @@ public class TitularController {
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach(a -> System.out.print(a));
 			model.addAttribute("titulares", titularRepository.findAll());
-			return "clienteform";
+			return "clientform";
 		}
 		titularRepository.save(titular);
 		return "index";

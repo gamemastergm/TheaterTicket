@@ -1,5 +1,6 @@
 package ucsal.edu.web.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -31,13 +32,16 @@ public class Titular {
 	private String cpf;
 	private String endereco;
 	private String numIdentificacao;
+	private String classificacao;
+	private LocalDate nascimento;
 	
 	public Titular() {
 		super();
 	}
 
 	public Titular(Long id, List<CartaoCredito> cartaoCredito, List<Transacao> transacao, List<Dependente> dependente,
-			ROLE role, String nome, String cpf, String endereco, String numIdentificacao) {
+			ROLE role, String nome, String cpf, String endereco, String numIdentificacao, String classificacao,
+			LocalDate nascimento) {
 		super();
 		this.id = id;
 		this.cartaoCredito = cartaoCredito;
@@ -48,6 +52,8 @@ public class Titular {
 		this.cpf = cpf;
 		this.endereco = endereco;
 		this.numIdentificacao = numIdentificacao;
+		this.classificacao = classificacao;
+		this.nascimento = nascimento;
 	}
 
 	public Long getId() {
@@ -120,6 +126,22 @@ public class Titular {
 
 	public void setNumIdentificacao(String numIdentificacao) {
 		this.numIdentificacao = numIdentificacao;
+	}
+
+	public String getClassificacao() {
+		return classificacao;
+	}
+
+	public void setClassificacao(String classificacao) {
+		this.classificacao = classificacao;
+	}
+
+	public LocalDate getNascimento() {
+		return nascimento;
+	}
+
+	public void setNascimento(LocalDate nascimento) {
+		this.nascimento = nascimento;
 	}
 
 }
